@@ -1,0 +1,33 @@
+doctype html
+html(lang="en")
+    head
+        title GTD!
+    body
+        form(
+            action="/create"
+            method="post"
+            accept-charset="utf-8")
+            input(
+                type="text"
+                name="content")
+            input(type="submit",value="Submit")
+        a(href="/logout") logout
+        if todos
+            ul
+                each val in todos
+                    - var d = new Date(val.updated_at).toString()
+                    li=val.content + ' ' + d
+                    a(href="/destroy/"+val._id) delete
+                    form(
+                        action="/update"
+                        method="post"
+                        accept-charset="utf-8")
+                        input(
+                            type="text"
+                            name="content")
+                        input(
+                            type="hidden"
+                            name="id"
+                            value=val._id
+                        )
+                        input(type="submit",value="Update")
